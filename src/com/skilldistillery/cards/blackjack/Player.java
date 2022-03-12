@@ -6,7 +6,7 @@ public class Player {
 	private BlackjackHand hand;
 	
 	public Player() {
-		hand = new BlackjackHand(); 
+		this.hand = new BlackjackHand(); 
 	}
 
 	public BlackjackHand getHand() {
@@ -14,7 +14,7 @@ public class Player {
 	}
 	
 	public void addToHand(Card card) {
-		hand.addCard(card);
+		this.hand.addCard(card);
 	}
 	
 	

@@ -1,5 +1,7 @@
 package com.skilldistillery.cards.blackjack;
 
+import java.util.List;
+
 import com.skilldistillery.cards.common.Card;
 import com.skilldistillery.cards.common.Hand;
 
@@ -7,6 +9,14 @@ public class BlackjackHand extends Hand {
 	
 	public BlackjackHand() {
 		
+	}
+	
+	public List<Card> getCards() {
+		return this.cards;
+	}
+	
+	public int getCardsSize() {
+		return this.cards.size();
 	}
 	
 	public int getHandValue() {
@@ -42,7 +52,9 @@ public class BlackjackHand extends Hand {
 		return overTwentyOne;
 		
 	}
+	
 
 
+	
 
 }
