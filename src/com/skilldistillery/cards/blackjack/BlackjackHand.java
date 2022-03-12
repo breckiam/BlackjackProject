@@ -28,6 +28,11 @@ public class BlackjackHand extends Hand {
 		return total;
 	}
 	
+	public int getFirstCardValue() {
+	
+		return cards.get(0).getValue();
+	}
+	
 	public boolean isBlackJack() {
 		int total = getHandValue();
 

@@ -26,19 +26,29 @@ public class BlackjackApp {
 		}
 
 		playerCards(p1);
-		dealerCards();
+		hiddenDealerCards();
 
 		if (eitherBlackJackOrBust(p1)) {
-			if (p1.getHand().getHandValue() > 21) {
-				System.out.println("BUSTED! " + p1.getHand().getHandValue());
-				return;
-			} else {
-				System.out.println("BLACKJACK!");
-				return;
-			}
+			return;
 		}
 
-		playerHitOrStay(p1);
+		if (playerHitOrStay(p1)) {
+			return;
+		}
+		
+		while (dealer.getHand().getHandValue() < 17) {
+			dealer.addToHand(deck.dealCard());
+			eitherBlackJackOrBust(p1);
+		}
+		
+		playerCards(p1);
+		dealerCards();
+		
+		if (p1.getHand().getHandValue() > dealer.getHand().getHandValue() ) {
+			System.out.println("You WON!");
+		} else {
+			System.out.println("Dealer Won.");
+		}
 
 	}
 
@@ -49,9 +59,19 @@ public class BlackjackApp {
 		Boolean blackJack = false;
 
 		if (playerHand.isBlackJack() || dealerHand.isBust()) {
+			if (p1.getHand().isBlackJack()) {
+				System.out.println("BlackJack!");
+			} else {
+				System.out.println("Dealer BUSTED!");
+			}
 			System.out.println("You won");
 			blackJack = true;
 		} else if (dealerHand.isBlackJack() || playerHand.isBust()) {
+			if(dealerHand.isBlackJack()) {
+				System.out.println("Dealer BlackJack!");
+			} else {
+				System.out.println("You BUSTED! " + p1.getHand().getHandValue());
+			}
 			System.out.println("Dealer won");
 			blackJack = true;
 		}
@@ -72,8 +92,22 @@ public class BlackjackApp {
 		System.out.println("Dealer card total: " + dealer.getHand().getHandValue());
 		System.out.println();
 	}
+	
+	private void hiddenDealerCards() {
+		System.out.print("Dealer cards: ");
+		for (int i = 0; i < dealer.getHand().getCards().size(); i++) {
+			if (i == 0) {
+				System.out.print(dealer.getCard());
+			}
+			
+			System.out.print(" 🂠 ");
+		}
+		System.out.println();
+		System.out.println("Dealer card total: " + dealer.getHand().getFirstCardValue());
+		System.out.println();
+	}
 
-	private void playerHitOrStay(Player p1) {
+	private boolean playerHitOrStay(Player p1) {
 		boolean keepGoing = false;
 
 		while (!keepGoing) {
@@ -87,7 +121,7 @@ public class BlackjackApp {
 				keepGoing = eitherBlackJackOrBust(p1);
 				break;
 			case "stay":
-				return;
+				return keepGoing;
 			default:
 				System.out.println("Please enter Hit or Stay... not " + choice);
 			}
@@ -98,6 +132,7 @@ public class BlackjackApp {
 		} else {
 			System.out.println("BLACKJACK!");
 		}
+		return keepGoing;
 
 	}
 

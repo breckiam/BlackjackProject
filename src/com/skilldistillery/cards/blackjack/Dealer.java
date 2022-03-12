@@ -13,6 +13,10 @@ public class Dealer extends Player {
 		return hand;
 	}
 	
+	public Card getCard() {
+		return hand.getCards().get(0);
+	}
+	
 	public void addToHand(Card card) {
 		this.hand.addCard(card);
 	}
