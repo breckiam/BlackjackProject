@@ -25,19 +25,30 @@ public abstract class Hand {
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-//		if (cards.equals(Player.class)) {
-			for (Card card : cards) {
-				sb.append(card);
-				if (cards.get(cards.size() - 1) != card) {
-					sb.append("  |  ");
+		String[] cardAscii = { "╔═══════╗ ", "║       ║ ", "║       ║ ", "║       ║ ", "║       ║ ", "║       ║ ",
+				"╚═══════╝ " };
+
+		for (int i = 0; i < cardAscii.length; i++) {
+			for (int j = 0; j < cards.size(); j++) {
+				if (i == 1) {
+					cardAscii[i] = "║ " + cards.get(j) + "   ║ ";
+				}
+				if (i == 3) {
+					cardAscii[i] = "║   " + cards.get(j).getName() + "   ║ ";
+				}
+				if (i == 5) {
+					cardAscii[i] = "║    " + cards.get(j) + "║ ";
+				}
+				sb.append(cardAscii[i]);
+				if (j == (cards.size() - 1)) {
+					sb.append("\n");
 				}
 			}
-//		} 
-//		else if (cards.equals(Dealer.class)) {
-//			sb.append(cards.get(0).toString());
-//		}
+		}
 		
-		return sb.toString();
 
+		return sb.toString();
 	}
+
+
 }

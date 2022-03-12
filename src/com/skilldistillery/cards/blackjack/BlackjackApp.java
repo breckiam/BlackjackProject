@@ -38,7 +38,9 @@ public class BlackjackApp {
 		
 		while (dealer.getHand().getHandValue() < 17) {
 			dealer.addToHand(deck.dealCard());
-			eitherBlackJackOrBust(p1);
+			if (eitherBlackJackOrBust(p1)) {
+				return;
+			}
 		}
 		
 		playerCards(p1);
@@ -80,15 +82,15 @@ public class BlackjackApp {
 	}
 
 	private void playerCards(Player p1) {
-		System.out.print("Your cards: ");
+		System.out.println("Your cards: ");
 		System.out.println(p1.getHand());
 		System.out.println("Card total: " + p1.getHand().getHandValue());
 		System.out.println();
 	}
 
 	private void dealerCards() {
-		System.out.print("Dealer cards: ");
-		System.out.println(dealer.getHand());
+		System.out.println("Dealer cards: ");
+		System.out.print(dealer.getHand());
 		System.out.println("Dealer card total: " + dealer.getHand().getHandValue());
 		System.out.println();
 	}
@@ -127,11 +129,6 @@ public class BlackjackApp {
 			}
 		}
 
-		if (p1.getHand().getHandValue() > 21) {
-			System.out.println("BUSTED! " + p1.getHand().getHandValue());
-		} else {
-			System.out.println("BLACKJACK!");
-		}
 		return keepGoing;
 
 	}
