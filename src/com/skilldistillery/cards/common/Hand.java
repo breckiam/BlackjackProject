@@ -3,11 +3,10 @@ package com.skilldistillery.cards.common;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Hand {
+public abstract class Hand  {
 	protected List<Card> cards = new ArrayList<>();
 	
-	public Hand () {
-		
+	public Hand() {	
 	}
 	
 	public void addCard(Card card) {
@@ -25,6 +24,9 @@ public abstract class Hand {
 		
 		for (Card card : cards) {
 			sb.append(card);
+			if (cards.get(cards.size()-1) != card) {
+			sb.append("  |  ");
+			}
 		}
 		
 		return sb.toString();
