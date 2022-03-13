@@ -3,7 +3,7 @@ package com.skilldistillery.cards.blackjack;
 import com.skilldistillery.cards.common.Card;
 import com.skilldistillery.cards.common.Deck;
 
-public class Dealer extends Player {
+public class Dealer {
 	private BlackjackHand hand = new BlackjackHand();
 	private BlackjackHand hiddenHand = new BlackjackHand();
 	private Deck deckOfCards = new Deck();
@@ -36,18 +36,5 @@ public class Dealer extends Player {
 	public void addToHiddenHand(Card card) {
 		this.hiddenHand.addCard(card);
 	}
-	
-//	public String toString() {
-//		StringBuilder sb = new StringBuilder();
-//		 
-//			for (Card card : hand.getCards()) {
-//				sb.append(card);
-//				sb.append("  |  ");
-//			}
-//
-//		return sb.toString();
-//
-//	}
-
 	
 }
