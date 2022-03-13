@@ -17,6 +17,12 @@ public class Deck {
 		}
 	}
 	
+	public void addAnotherDeck(Deck deck) {
+		for (Card card : deck.getCardsFromDeck()) {
+			this.deckOfCards.add(card);
+		}
+	}
+	
 	public int deckSize() {
 		return deckOfCards.size();
 	}
@@ -27,5 +33,9 @@ public class Deck {
 	
 	public void shuffleDeck() {
 		Collections.shuffle(deckOfCards);
+	}
+	
+	public List<Card> getCardsFromDeck() {
+		return this.deckOfCards;
 	}
 }

@@ -2,11 +2,9 @@ package com.skilldistillery.cards.blackjack;
 
 import java.util.Scanner;
 
-import com.skilldistillery.cards.common.Deck;
 
 public class BlackjackApp {
 	private Scanner kb = new Scanner(System.in);
-	private Deck deck = new Deck();
 	private Dealer dealer = new Dealer();
 
 	public static void main(String[] args) {
@@ -18,13 +16,19 @@ public class BlackjackApp {
 
 	private void start() {
 		Player p1 = new Player();
-		deck.shuffleDeck();
+		dealer.getDeck().shuffleDeck();
+		
+		// TEST to show cards in deck and deck size
+//		System.out.println(dealer.getDeck().getCardsFromDeck());
+//		System.out.println("Deck size: " + dealer.getDeck().getCardsFromDeck().size());
 
 		for (int i = 0; i < 2; i++) {
-			p1.addToHand(deck.dealCard());
-			dealer.addToHand(deck.dealCard());
+			p1.addToHand(dealer.getDeck().dealCard());
+			dealer.addToHand(dealer.getDeck().dealCard());
 		}
 
+		dealer.addToHiddenHand(dealer.getCard());
+		
 		playerCards(p1);
 		hiddenDealerCards();
 
@@ -37,7 +41,7 @@ public class BlackjackApp {
 		}
 		
 		while (dealer.getHand().getHandValue() < 17) {
-			dealer.addToHand(deck.dealCard());
+			dealer.addToHand(dealer.getDeck().dealCard());
 			if (eitherBlackJackOrBust(p1)) {
 				return;
 			}
@@ -60,7 +64,7 @@ public class BlackjackApp {
 		BlackjackHand dealerHand = dealer.getHand();
 		Boolean blackJack = false;
 
-		if (playerHand.isBlackJack() || dealerHand.isBust()) {
+		if (p1.getHand().isBlackJack() || dealerHand.isBust()) {
 			if (p1.getHand().isBlackJack()) {
 				System.out.println("BlackJack!");
 			} else {
@@ -69,6 +73,7 @@ public class BlackjackApp {
 			System.out.println("You won");
 			blackJack = true;
 		} else if (dealerHand.isBlackJack() || playerHand.isBust()) {
+			dealerCards();
 			if(dealerHand.isBlackJack()) {
 				System.out.println("Dealer BlackJack!");
 			} else {
@@ -96,13 +101,16 @@ public class BlackjackApp {
 	}
 	
 	private void hiddenDealerCards() {
-		System.out.print("Dealer cards: ");
-		for (int i = 0; i < dealer.getHand().getCards().size(); i++) {
+		System.out.println("Dealer cards: ");
+		for (int i = 0; i < (dealer.getHand().getCards().size() - 1); i++) {
 			if (i == 0) {
-				System.out.print(dealer.getCard());
+				System.out.print(dealer.getHiddenHand());
+			}  
+			System.out.print(" 🂠 ");
+			if (i == (dealer.getHand().getCards().size() - 2) ) {
+				System.out.print(" + " + (i+1) + " hidden card");
 			}
 			
-			System.out.print(" 🂠 ");
 		}
 		System.out.println();
 		System.out.println("Dealer card total: " + dealer.getHand().getFirstCardValue());
@@ -118,7 +126,7 @@ public class BlackjackApp {
 
 			switch (choice) {
 			case "hit":
-				p1.addToHand(deck.dealCard());
+				p1.addToHand(dealer.getDeck().dealCard());
 				playerCards(p1);
 				keepGoing = eitherBlackJackOrBust(p1);
 				break;

@@ -3,8 +3,6 @@ package com.skilldistillery.cards.common;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.skilldistillery.cards.blackjack.Dealer;
-import com.skilldistillery.cards.blackjack.Player;
 
 public abstract class Hand {
 	protected List<Card> cards;
@@ -33,10 +31,10 @@ public abstract class Hand {
 				if (i == 1) {
 					cardAscii[i] = "║ " + cards.get(j) + "   ║ ";
 				}
-				if (i == 3) {
+					else if (i == 3) {
 					cardAscii[i] = "║   " + cards.get(j).getName() + "   ║ ";
 				}
-				if (i == 5) {
+					else if (i == 5) {
 					cardAscii[i] = "║    " + cards.get(j) + "║ ";
 				}
 				sb.append(cardAscii[i]);

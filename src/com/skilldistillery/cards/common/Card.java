@@ -20,13 +20,13 @@ public class Card {
 				rankInt =  this.rank.getValue() + "" ;
 				
 			} else if (this.rank == Rank.ACE) {
-				rankInt = "A" + "";
+				rankInt = "A";
 			} else if (this.rank == Rank.QUEEN) {
-				rankInt = "Q" + "";
+				rankInt = "Q";
 			} else if (this.rank == Rank.KING) {
-				rankInt = "K" + "";
+				rankInt = "K";
 			} else if (this.rank == Rank.JACK) {
-				rankInt = "J"+ "";
+				rankInt = "J";
 			}
 		}
 		if (this.rank == Rank.TEN) {
