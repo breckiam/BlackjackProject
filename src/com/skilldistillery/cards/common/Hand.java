@@ -5,11 +5,8 @@ import java.util.List;
 
 
 public abstract class Hand {
-	protected List<Card> cards;
+	protected List<Card> cards = new ArrayList<>();
 
-	public Hand() {
-		this.cards = new ArrayList<>();
-	}
 
 	public void addCard(Card card) {
 		cards.add(card);
