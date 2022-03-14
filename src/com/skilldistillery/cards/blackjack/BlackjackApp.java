@@ -1,6 +1,5 @@
 package com.skilldistillery.cards.blackjack;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class BlackjackApp {
@@ -12,6 +11,7 @@ public class BlackjackApp {
 	public static void main(String[] args) {
 		BlackjackApp app = new BlackjackApp();
 		app.start();
+		app.exitMessage();
 
 		app.kb.close();
 	}
@@ -28,30 +28,32 @@ public class BlackjackApp {
 			dealer.getHand().clear();
 			dealer.getHiddenHand().clear();
 			bet = 0;
-			
-			while (bet == 0) {
+
+			while (keepGoing && bet == 0) {
 				System.out.println();
 				System.out.println("---------------NEW GAME---------------");
 				System.out.println();
 				System.out.println("Balance: $" + p1.getBalance());
-				System.out.println("How much would you like to bet? (Enter \"0\" to quit)");
+				System.out.println("How much would you like to bet? (Enter \"quit\" to quit)");
 				System.out.println("Bet amount: ");
+				String choice = kb.next();
 
+				if (choice.equalsIgnoreCase("quit")) {
+					System.out.println("Goodbye :)");
+					return;
+				}
 				try {
-					bet = kb.nextInt();
+					bet = Integer.parseInt(choice);
 					if (bet > p1.getBalance()) {
-						throw new InputMismatchException();
-					} if (bet == 0 ) {
-						System.out.println("Goodbye :)");
-						return;
+						throw new NumberFormatException();
 					}
 
-				} catch (InputMismatchException e) {
+				} catch (NumberFormatException e) {
 					System.err.println("Must enter numer, that number must be <= your blance");
 				}
 				kb.nextLine();
 			}
-			
+
 			p1.setBalance((p1.getBalance() - bet));
 
 			for (int i = 0; i < 2; i++) {
@@ -85,15 +87,18 @@ public class BlackjackApp {
 			if (p1.getHand().getHandValue() > dealer.getHand().getHandValue()) {
 				System.out.println("You WON! $" + bet);
 				p1.setBalance((p1.getBalance() + (bet * 2)));
+			} else if (p1.getHand().getHandValue() == dealer.getHand().getHandValue()) {
+				p1.setBalance((p1.getBalance() + bet));
+				System.out.println("Tied, orignial bet still retained");
 			} else {
-				System.out.println("Dealer Won, you lost $" + bet );
+				System.out.println("Dealer Won, you lost $" + bet);
 			}
-			
-
 
 		}
+		
 
 	}
+	
 
 	private boolean eitherBlackJackOrBust() {
 
@@ -109,7 +114,7 @@ public class BlackjackApp {
 			} else {
 				System.out.println("Dealer BUSTED!");
 			}
-			System.out.println("You won + $" + bet );
+			System.out.println("You won + $" + bet);
 			p1.setBalance((p1.getBalance() + (bet * 2)));
 			blackJack = true;
 		} else if (dealerHand.isBlackJack() || playerHand.isBust()) {
@@ -182,4 +187,16 @@ public class BlackjackApp {
 
 	}
 
+	private void exitMessage() {
+		System.out.println("Thanks for plaing with us!");
+		if (p1.getBalance() == 0) {
+			System.out.println("So sorry you lost all of your money :(");
+		} else if (p1.getBalance() > 2500) {
+			System.out.println("Nice you left with $" + (p1.getBalance() - 2500) + " extra!");
+			System.out.println("Congrats!! See you next time :)");
+		}else {
+			System.out.println("Eh, at least you still walked away with $" +p1.getBalance());
+		}
+		
+	}
 }
